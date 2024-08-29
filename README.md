@@ -36,5 +36,7 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
 ## Deploy on Docker
+```
 sudo docker build -t chat\_frontend .
 sudo docker run --detach -p 3000:3000 chat\_frontend
+```
