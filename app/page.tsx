@@ -57,7 +57,7 @@ const appPrivateMessages = "/app/privatemessage"
         });
 
     client.onConnect = (frame) => {
-        console.log("connection succesful!);
+        console.log("connection succesful!");
 //         client.subscribe(privatePreUrl + user.id + userUrl, (usersList) => {
 //             console.log(JSON.parse(usersList.body));
 //         });
