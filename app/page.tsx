@@ -41,6 +41,7 @@ const appPrivateMessages = "/app/privatemessage"
     const client = new Client({
         brokerURL: "ws://localhost:8080/chatApp",
        onConnect: () => {
+           console.log("Connection succesful!");
            client.subscribe(privatePreUrl + User.id + userUrl, (userList) => {
                //add function to load HTML users from here
                console.log(JSON.parse(userList.body));
