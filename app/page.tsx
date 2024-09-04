@@ -30,51 +30,36 @@ export default function Home() {
 
 const userUrl = "/topic/users";
 const topicUrl = "/topic/messages";
+const topicSimpleMessage = "/topic/messageSimple";
 const privateTopicUrl = "/topic/privatemessages";
 const privatePreUrl = "/user/";
 const appUsers = "/app/user";
-const appMessages = "/app/message"
+const appMessages = "/app/message";
+const appSimpleMessage = "/app/messageSimple";
 const appPrivateMessages = "/app/privatemessage"
 
     const client = new Client({
         brokerURL: "ws://localhost:8080/chatApp",
-//        onConnect: () => {
-//            client.subscribe(privatePreUrl + User.id + userUrl, (userList) => {
-//                //add function to load HTML users from here
-//                console.log(JSON.parse(userList.body));
-//                });
-//            client.subscribe(topicUrl, (message) => {
-//                console.log(JSON.parse(message.body));
-//                });
-//            client.subscribe(privatePreUrl + User.id + privateTopicUrl, (message) => {
-//                console.log(JSON.parse(message.body));
-//                });
-//            client.publish({
-//                destination: appUsers,
-//                body: JSON.stringify(User)
-//                });
-//            },
+       onConnect: () => {
+           client.subscribe(privatePreUrl + User.id + userUrl, (userList) => {
+               //add function to load HTML users from here
+               console.log(JSON.parse(userList.body));
+               });
+           client.subscribe(topicUrl, (message) => {
+               console.log(JSON.parse(message.body));
+               });
+           client.subscribe(topicSimpleMessage, (message) => {
+               console.log(message);
+               });
+           client.subscribe(privatePreUrl + User.id + privateTopicUrl, (message) => {
+               console.log(JSON.parse(message.body));
+               });
+           client.publish({
+               destination: appUsers,
+               body: JSON.stringify(User)
+               });
+           },
         });
-
-    client.onConnect = (frame) => {
-        console.log("connection succesful!");
-//         client.subscribe(privatePreUrl + user.id + userUrl, (usersList) => {
-//             console.log(JSON.parse(usersList.body));
-//         });
-//
-//          client.subscribe("/topic/greetings", (message) => {
-//              console.log(JSON.parse(message.body));
-//          });
-//
-//          client.publish({
-//              destination: "/app/hello",
-//              body: JSON.stringify({'name': "hello world this is a message"})
-//          });
-//
-//          client.subscribe(privatePreUrl + user.id + privateTopicUrl, (message) => {
-//              console.log(JSON.parse(message.body));
-//          });
-    };
 
     client.onWebSocketError = (error) => {
         console.error('Error with websocket', error);
