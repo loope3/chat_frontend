@@ -1,0 +1,20 @@
+h1
+{
+    margin-left:30%;
+    font-size: 40px;
+}
+body
+{
+    background-color: darkblue;
+    color: 'rgb(var(--foreground-rgb))';
+    background: darkblue;
+}
+button{
+    position: relative;
+    top: 40px;
+    background-color: white;
+    color: black;
+    border: solid black 3px;
+    border-style: solid;
+    border-radius:5px;
+}

@@ -1,0 +1,19 @@
+/*#Chatbox
+{
+    border:solid black 4px;
+
+}
+
+#Chatbox>div
+{
+    border:solid white 4px;
+}*/
+
+input
+{
+    color: black;
+    display: flex;
+    margin-top:25px;
+    position:relative;
+    top:50px;
+}
