@@ -37,6 +37,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## Deploy on Docker
 ```
-sudo docker build -t chat\_frontend .
-sudo docker run --detach -p 3000:3000 chat\_frontend
+sudo docker build --no-cache -t chat_frontend .
+sudo docker run -d -p 3000:3000 chat_frontend
+
+Wait ~5 mins to ensure everything starts up before interacting.
 ```
