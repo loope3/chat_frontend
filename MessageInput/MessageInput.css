@@ -1,0 +1,54 @@
+/* Message input area styling */
+.message-input-container {
+  display: flex;
+  padding: 15px;
+  background-color: #40444b; /* Input area background */
+}
+
+/* Styling for the text input */
+.message-input {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid black; /* Black border for the input field */
+  border-radius: 5px;
+  background-color: #2f3136; /* Input field background */
+  color: #dcddde; /* Light text color */
+}
+
+/* Styling for the send button */
+.send-button {
+  margin-left: 10px;
+  padding: 10px 20px;
+  background-color: #5865f2;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.send-button:hover {
+  background-color: #4752c4; /* Darker blue on hover */
+}
+.BTN_HOME
+{
+     display:flex;
+     position:relative;
+     top:700px;
+     right:550px;
+     color: Black;
+}
+#Online
+{
+    border: solid black 5px;
+    height:50px;
+    border-radius:25px;
+    width:50px;
+}
+
+#container
+{
+    display:flex;
+}
