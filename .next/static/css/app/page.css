@@ -58,7 +58,7 @@
   display: flex;
   padding: 15px;
   background-color: #40444b; /* Input area background */
-}
+} 
 
 .message-input {
   flex: 1;
@@ -74,7 +74,7 @@
 .send-button {
   margin-left: 10px;
   padding: 10px 20px;
-  background-color: #5865f2; /* Discord-like blue button */
+  background-color: #5865f2; 
   color: #ffffff;
   border: none;
   border-radius: 5px;
@@ -140,7 +140,7 @@
 .send-button {
   margin-left: 10px;
   padding: 10px 20px;
-  background-color: #5865f2; /* Discord-like blue button */
+  background-color: #5865f2;
   color: #ffffff;
   border: none;
   border-radius: 5px;

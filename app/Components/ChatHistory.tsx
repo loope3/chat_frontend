@@ -1,13 +1,32 @@
+"use client";
 import React from 'react';
-import './ChatHistory.css'; // Create this CSS file for styling
+import './ChatHistory.css';
 
-export default function ChatHistory() {
+interface Message {
+  user: {
+    id: string;
+    username: string;
+  };
+  comment: string;
+  action: string;
+  timestamp: string;
+}
+
+interface ChatHistoryProps {
+  messages: Message[];
+}
+
+const ChatHistory: React.FC<ChatHistoryProps> = ({ messages }) => {
   return (
     <div className="chat-history">
-      {/* Example messages */}
-      <div className="message">User 1: This is the chat history!</div>
-      <div className="message">User 2: Hi there!</div>
-      <div className="message">User 1: How are you?</div>
+      {messages.map((message, index) => (
+        <div key={index} className="message">
+          <p><strong>{message.user.username}</strong>: {message.comment}</p>
+          <p className="timestamp">{message.timestamp}</p>
+        </div>
+      ))}
     </div>
   );
-}
+};
+
+export default ChatHistory;
