@@ -20,11 +20,12 @@ export default function MessageInput({ client, user}: MessageInputProps) {
         action:'NEW_MESSAGE',
         timestamp: new Date().toISOString(),
       };
+      console.log("sending messing to /app/messageSimple");
+      console.log('Sending message:', message);
       client.publish({
-        destination: "/topic/messageSimple",
-        body: JSON.stringify(newMessage)
+        destination: "/app/messageSimple",
+        body: message
         });
-      console.log('Sending message:', newMessage);
       setMessage('');
     }
 

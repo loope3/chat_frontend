@@ -51,10 +51,14 @@ const client = new Client({
            console.log(JSON.parse(userList.body));
            });
        client.subscribe(topicUrl, (message) => {
+           console.log("received a complete message object!");
            console.log(JSON.parse(message.body));
            });
        client.subscribe(topicSimpleMessage, (message) => {
+           console.log("received a simple message!");
            console.log(message);
+           console.log(message.toString());
+           console.log(message.body)
            });
        client.subscribe(privatePreUrl + User.id + privateTopicUrl, (message) => {
            console.log(JSON.parse(message.body));
