@@ -2,7 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import './User1Layout.css';
 import ChatHistory from './ChatHistory'; 
-import MessageInput from './MessageInput'; 
+import {Message} from './ChatHistory'; 
+import MessageInput from './MessageInput';  
 import { Client } from '@stomp/stompjs'; 
 function uuidv4() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
@@ -21,7 +22,7 @@ export default function UserLayout() {
     username: "anonymous"
 };
 
-const [messages, setMessages] = useState([]);
+const [messages, setMessages] = useState<Message[]>([]);
 
 const newMessage = {
   user: User,
@@ -53,6 +54,9 @@ const client = new Client({
        client.subscribe(topicUrl, (message) => {
            console.log("received a complete message object!");
            console.log(JSON.parse(message.body));
+           const newMessage = JSON.parse(message.body);
+           console.log(newMessage);
+          setMessages((prevMessages) => [...prevMessages, newMessage]);
            });
        client.subscribe(topicSimpleMessage, (message) => {
            console.log("received a simple message!");
@@ -86,13 +90,21 @@ useEffect(() => {
     },
 []);
 
+if(!client.connected){
+  console.log("not connected in user layout1");
+};
+
+const handleNewMessage = (message: Message) => {
+  setMessages((prevMessages) => [...prevMessages, message]);
+};
+
   return (
     <div className="user-layout">
       <div className="user-left">
         <p>User 1</p>
       </div>
       <div className="chat-container">
-        {client && <MessageInput client={client} user={User}/>}
+        {client && <MessageInput client={client} user={User} onNewMessage={handleNewMessage}/>}
         <ChatHistory messages={messages}/>
       </div>
       <div className="user-right">

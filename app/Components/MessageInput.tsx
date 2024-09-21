@@ -1,16 +1,18 @@
 "use client";
 import React, { useState } from 'react';
 import './MessageInput.css';
+import { Message } from './ChatHistory'; 
 import { FiSend } from 'react-icons/fi';
 import { Client } from '@stomp/stompjs';
 
+
 interface MessageInputProps {
   client: any;
-  user: any;  
+  user: any;
+  onNewMessage: (message:Message) => void; 
 }
-export default function MessageInput({ client, user}: MessageInputProps) {
-  const [message, setMessage] = useState(''); // Store the message input
-
+export default function MessageInput({ client,user, onNewMessage}: MessageInputProps) {
+  const [message, setMessage] = useState(''); 
   const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (message.trim() && client) {
@@ -22,10 +24,12 @@ export default function MessageInput({ client, user}: MessageInputProps) {
       };
       console.log("sending messing to /app/messageSimple");
       console.log('Sending message:', message);
-      client.publish({
-        destination: "/app/messageSimple",
-        body: message
+        client.publish({
+            destination: "/app/messageSimple",
+            body: message,
         });
+        onNewMessage(newMessage);
+
       setMessage('');
     }
 

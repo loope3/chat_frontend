@@ -2,7 +2,7 @@
 import React from 'react';
 import './ChatHistory.css';
 
-interface Message {
+export interface Message {
   user: {
     id: string;
     username: string;
@@ -10,6 +10,7 @@ interface Message {
   comment: string;
   action: string;
   timestamp: string;
+  
 }
 
 interface ChatHistoryProps {
@@ -30,3 +31,4 @@ const ChatHistory: React.FC<ChatHistoryProps> = ({ messages }) => {
 };
 
 export default ChatHistory;
+
