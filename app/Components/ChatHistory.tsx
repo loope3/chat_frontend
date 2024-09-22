@@ -2,29 +2,14 @@
 import React from 'react';
 import './ChatHistory.css';
 
-interface Message {
-  user: {
-    id: string;
-    username: string;
-  };
-  comment: string;
-  action: string;
-  timestamp: string;
-}
-
 interface ChatHistoryProps {
-  messages: Message[];
+  messages: string; // Accepts a single string message
 }
 
 const ChatHistory: React.FC<ChatHistoryProps> = ({ messages }) => {
   return (
     <div className="chat-history">
-      {messages.map((message, index) => (
-        <div key={index} className="message">
-          <p><strong>{message.user.username}</strong>: {message.comment}</p>
-          <p className="timestamp">{message.timestamp}</p>
-        </div>
-      ))}
+      {messages && <div className="message">{messages}</div>} {/* Display the message if it exists */}
     </div>
   );
 };

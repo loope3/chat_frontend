@@ -4,33 +4,24 @@ import './User1Layout.css';
 import ChatHistory from './ChatHistory'; 
 import MessageInput from './MessageInput'; 
 import { Client } from '@stomp/stompjs'; 
+
 function uuidv4() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
-  .replace(/[xy]/g, function (c) {
+    .replace(/[xy]/g, function (c) {
       const r = Math.random() * 16 | 0,
           v = c == 'x' ? r : (r & 0x3 | 0x8);
       return v.toString(16);
-  });
+    });
 }
 
 export default function UserLayout() {
-
   const User = {
     id: uuidv4(),
     serialId: null,
     username: "anonymous"
-};
+  };
 
-const [messages, setMessages] = useState([]);
-
-const newMessage = {
-  user: User,
-  receiverId: null, 
-  comment: messages,
-  action: 'NEW_MESSAGE', 
-  timestamp: new Date().toISOString(),
-};
-
+  const [messages, setMessages] = useState<string[]>([]); // Use useState for messages
 
 const userUrl = "/topic/users";
 const topicUrl = "/topic/messages";
@@ -53,20 +44,20 @@ const client = new Client({
        client.subscribe(topicUrl, (message) => {
            console.log("received a complete message object!");
            console.log(JSON.parse(message.body));
+           const newMessage = JSON.parse(message.body);
+           console.log(newMessage);
            });
-       client.subscribe(topicSimpleMessage, (message) => {
-           console.log("received a simple message!");
-           console.log(message);
-           console.log(message.toString());
-           console.log(message.body)
+        client.subscribe(topicSimpleMessage, (message) => {
+            console.log("received a simple message!");
+            console.log(message);
+            console.log(message.toString());
+            console.log(message.body);
+            setMessages((prevMessages) => [...prevMessages, message.body]);
            });
        client.subscribe(privatePreUrl + User.id + privateTopicUrl, (message) => {
            console.log(JSON.parse(message.body));
            });
-       client.publish({
-           destination: appUsers,
-           body: JSON.stringify(User)
-           });
+
        },
     });
 
@@ -86,14 +77,17 @@ useEffect(() => {
     },
 []);
 
+if(!client.connected){
+  console.log("not connected in user layout1");
+};
   return (
     <div className="user-layout">
       <div className="user-left">
         <p>User 1</p>
       </div>
       <div className="chat-container">
-        {client && <MessageInput client={client} user={User}/>}
-        <ChatHistory messages={messages}/>
+        <MessageInput client={client} user={User} />
+        <ChatHistory messages={messages} /> {/* Pass the state to ChatHistory */}
       </div>
       <div className="user-right">
         <p>User 2</p>
