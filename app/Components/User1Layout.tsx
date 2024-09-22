@@ -1,17 +1,17 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import './User1Layout.css';
-import ChatHistory from './ChatHistory'; 
-import MessageInput from './MessageInput'; 
-import { Client } from '@stomp/stompjs'; 
+import ChatHistory from './ChatHistory';
+import MessageInput from './MessageInput';
+import { Client } from '@stomp/stompjs';
 
 function uuidv4() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
-    .replace(/[xy]/g, function (c) {
+  .replace(/[xy]/g, function (c) {
       const r = Math.random() * 16 | 0,
           v = c == 'x' ? r : (r & 0x3 | 0x8);
       return v.toString(16);
-    });
+  });
 }
 
 export default function UserLayout() {
@@ -21,7 +21,8 @@ export default function UserLayout() {
     username: "anonymous"
   };
 
-  const [messages, setMessages] = useState<string[]>([]); // Use useState for messages
+const [messages, setMessages] = useState([]);
+
 
 const userUrl = "/topic/users";
 const topicUrl = "/topic/messages";
@@ -36,30 +37,40 @@ const appPrivateMessages = "/app/privatemessage"
 const client = new Client({
     brokerURL: "ws://localhost:8080/chatApp",
    onConnect: () => {
+   
        console.log("Connection succesful!");
+       
        client.subscribe(privatePreUrl + User.id + userUrl, (userList) => {
            //add function to load HTML users from here
            console.log(JSON.parse(userList.body));
            });
+           
        client.subscribe(topicUrl, (message) => {
            console.log("received a complete message object!");
            console.log(JSON.parse(message.body));
-           const newMessage = JSON.parse(message.body);
-           console.log(newMessage);
            });
-        client.subscribe(topicSimpleMessage, (message) => {
-            console.log("received a simple message!");
-            console.log(message);
-            console.log(message.toString());
-            console.log(message.body);
-            setMessages((prevMessages) => [...prevMessages, message.body]);
-           });
+           
+       client.subscribe(topicSimpleMessage, simpleMessageRecieved);
+       
        client.subscribe(privatePreUrl + User.id + privateTopicUrl, (message) => {
            console.log(JSON.parse(message.body));
            });
-
+           
+       client.publish({
+           destination: appUsers,
+           body: JSON.stringify(User)
+           });
        },
     });
+    
+    const simpleMessageRecieved = (payload) => {
+ 	console.log("received a simple message! dsfsfsdfsdf");
+        console.log(payload.body);
+        var payloadData = payload.body;
+        messages.push(payloadData);
+        console.log(messages);
+//        setMessages([...payloadData]);
+    }
 
 client.onWebSocketError = (error) => {
     console.error('Error with websocket', error);
@@ -77,9 +88,6 @@ useEffect(() => {
     },
 []);
 
-if(!client.connected){
-  console.log("not connected in user layout1");
-};
   return (
     <div className="user-layout">
       <div className="user-left">
@@ -95,3 +103,4 @@ if(!client.connected){
     </div>
   );
 }
+
