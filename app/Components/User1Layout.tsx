@@ -22,6 +22,7 @@ export default function UserLayout() {
   };
 
 const [messages, setMessages] = useState([]);
+const [stompClient, setStompClient] = useState(null);
 
 
 const userUrl = "/topic/users";
@@ -33,58 +34,61 @@ const appUsers = "/app/user";
 const appMessages = "/app/message";
 const appSimpleMessage = "/app/messageSimple";
 const appPrivateMessages = "/app/privatemessage"
-
-const client = new Client({
-    brokerURL: "ws://localhost:8080/chatApp",
-   onConnect: () => {
-   
-       console.log("Connection succesful!");
-       
-       client.subscribe(privatePreUrl + User.id + userUrl, (userList) => {
-           //add function to load HTML users from here
-           console.log(JSON.parse(userList.body));
-           });
-           
-       client.subscribe(topicUrl, (message) => {
-           console.log("received a complete message object!");
-           console.log(JSON.parse(message.body));
-           });
-           
-       client.subscribe(topicSimpleMessage, simpleMessageRecieved);
-       
-       client.subscribe(privatePreUrl + User.id + privateTopicUrl, (message) => {
-           console.log(JSON.parse(message.body));
-           });
-           
-       client.publish({
-           destination: appUsers,
-           body: JSON.stringify(User)
-           });
-       },
-    });
     
     const simpleMessageRecieved = (payload) => {
- 	console.log("received a simple message! dsfsfsdfsdf");
+ 	console.log("received a simple message!");
         console.log(payload.body);
         var payloadData = payload.body;
         messages.push(payloadData);
         console.log(messages);
-//        setMessages([...payloadData]);
+        setMessages([...payloadData]);
     }
-
-client.onWebSocketError = (error) => {
-    console.error('Error with websocket', error);
-};
-
-client.onStompError = (frame) => {
-    console.error('Broker reported error: ' + frame.headers['message']);
-    console.error('Additional details: ' + frame.body);
-};
 
 useEffect(() => {
     console.log(User.id);
-    console.log("connecting to server...")
+    console.log("connecting to server...");
+    const client = new Client({
+	   brokerURL: "ws://localhost:8080/chatApp",
+	   onConnect: () => {
+	   
+	       console.log("Connection succesful!");
+	       
+	       client.subscribe(privatePreUrl + User.id + userUrl, (userList) => {
+		   //add function to load HTML users from here
+		   console.log(JSON.parse(userList.body));
+		   });
+		   
+	       client.subscribe(topicUrl, (message) => {
+		   console.log("received a complete message object!");
+		   console.log(JSON.parse(message.body));
+		   });
+		   
+	       client.subscribe(topicSimpleMessage, simpleMessageRecieved);
+	       
+	       client.subscribe(privatePreUrl + User.id + privateTopicUrl, (message) => {
+		   console.log(JSON.parse(message.body));
+		   });
+		   
+	       client.publish({
+		   destination: appUsers,
+		   body: JSON.stringify(User)
+		   });
+	       },
+	 });
+    client.onWebSocketError = (error) => {
+	console.error('Error with websocket', error);
+    };
+
+    client.onStompError = (frame) => {
+	console.error('Broker reported error: ' + frame.headers['message']);
+	console.error('Additional details: ' + frame.body);
+    };
+
     client.activate();
+        
+    setStompClient(client);
+    
+    
     },
 []);
 
@@ -94,7 +98,7 @@ useEffect(() => {
         <p>User 1</p>
       </div>
       <div className="chat-container">
-        <MessageInput client={client} user={User} />
+        <MessageInput client={stompClient} user={User} />
         <ChatHistory messages={messages} /> {/* Pass the state to ChatHistory */}
       </div>
       <div className="user-right">
