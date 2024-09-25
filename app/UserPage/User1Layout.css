@@ -1,0 +1,97 @@
+.user-layout {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  background-color: #2c2f33; /* Dark background */
+  color: #ffffff; /* White text */
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    flex-direction: column; /* Stack user panels on smaller screens */
+  }
+}
+
+/* User panels on the sides */
+.user-left,
+.user-right {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #23272a; /* Slightly darker background */
+  border-right: 1px solid #40444b; /* Border between user and chat sections */
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    border-right: none;
+    border-bottom: 1px solid #40444b; /* Change border for stacked layout */
+  }
+}
+
+/* Chat container in the center */
+.chat-container {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #36393f; /* Chat area background */
+  border-left: 1px solid #40444b;
+  border-right: 1px solid #40444b;
+}
+
+/* Chat history styling */
+.chat-history {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto; /* Allows vertical scrolling */
+  background-color: #2f3136; /* Darker background for chat history */
+  border-bottom: 1px solid #40444b; /* Border between chat history and input */
+  height: calc(100vh - 100px); /* Adjust this value as needed to fit your layout */
+}
+
+/* Message input area styling */
+.message-input-container {
+  display: flex;
+  padding: 15px;
+  background-color: #40444b; /* Input area background */
+} 
+
+.message-input {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid black; /* Black border for the input field */
+  border-radius: 5px;
+  background-color: #2f3136; /* Input field background */
+  color: #dcddde; /* Light text color */
+}
+
+/* Styling for the send button */
+.send-button {
+  margin-left: 10px;
+  padding: 10px 20px;
+  background-color: #5865f2; 
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.send-button:hover {
+  background-color: #4752c4; /* Darker blue on hover */
+}
+
+/* Responsive font size adjustments */
+@media (max-width: 768px) {
+  .message-input {
+    font-size: 14px;
+  }
+
+  .send-button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
