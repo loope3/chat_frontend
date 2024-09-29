@@ -3,7 +3,6 @@
   \****************************************************************************************************************************************************************************************************************************************************************************/
 .user-layout {
   display: flex;
-  flex-direction: row;
   height: 100vh;
   background-color: #2c2f33; /* Dark background */
   color: #ffffff; /* White text */
@@ -36,11 +35,10 @@
 .chat-container {
   flex: 3;
   display: flex;
+  justify-content: flex-end;
   flex-direction: column;
-  justify-content: space-between;
   background-color: #36393f; /* Chat area background */
-  border-left: 1px solid #40444b;
-  border-right: 1px solid #40444b;
+  height: 100vh; /* Fill entire height */
 }
 
 /* Chat history styling */
@@ -50,7 +48,6 @@
   overflow-y: auto; /* Allows vertical scrolling */
   background-color: #2f3136; /* Darker background for chat history */
   border-bottom: 1px solid #40444b; /* Border between chat history and input */
-  height: calc(100vh - 100px); /* Adjust this value as needed to fit your layout */
 }
 
 /* Message input area styling */
@@ -58,7 +55,8 @@
   display: flex;
   padding: 15px;
   background-color: #40444b; /* Input area background */
-} 
+  align-items: center;
+}
 
 .message-input {
   flex: 1;
@@ -66,6 +64,7 @@
   font-size: 16px;
   border: 2px solid black; /* Black border for the input field */
   border-radius: 5px;
+  width: 95%;
   background-color: #2f3136; /* Input field background */
   color: #dcddde; /* Light text color */
 }
@@ -101,20 +100,19 @@
 /*!****************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[3]!./app/Components/ChatHistory.css ***!
   \****************************************************************************************************************************************************************************************************************************************************************************/
+.message {
+  padding: 8px;
+  margin-bottom: 10px; /* Spacing between messages */
+  background-color: #000000;
+  border-radius: 5px;
+  word-wrap: break-word; /* Ensures long messages wrap to the next line */
+  max-width: 80%; /* Adjusts how wide the messages can be */
+}
+
 .chat-history {
-    flex: 2; /* Takes up more space compared to the user sections */
-    border-left: 2px solid black;
-    border-right: 2px solid black;
-    padding: 10px;
-    overflow-y: auto; /* Allows scrolling if the chat history is long */
-  }
-  
-  .message {
-    margin-bottom: 10px;
-    padding: 5px;
-    background-color: #f1f1f1; /* Light gray background for messages */
-    border-radius: 5px;
-  }
+  max-height: 1000px; /* Example height */
+  overflow-y: auto; /* Adds scroll when messages exceed height */
+}
 /*!*****************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[3]!./app/Components/MessageInput.css ***!
   \*****************************************************************************************************************************************************************************************************************************************************************************/
@@ -131,7 +129,7 @@
   padding: 10px;
   font-size: 16px;
   border: 2px solid black; /* Black border for the input field */
-  border-radius: 5px;
+  border-radius: 10px;
   background-color: #2f3136; /* Input field background */
   color: #dcddde; /* Light text color */
 }

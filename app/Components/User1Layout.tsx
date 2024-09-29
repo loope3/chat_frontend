@@ -21,7 +21,7 @@ export default function UserLayout() {
     username: "anonymous"
   };
 
-const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<string[]>([]);
 const [stompClient, setStompClient] = useState(null);
 
 
@@ -39,9 +39,8 @@ const appPrivateMessages = "/app/privatemessage"
  	console.log("received a simple message!");
         console.log(payload.body);
         var payloadData = payload.body;
-        messages.push(payloadData);
+        setMessages((prevMessages) => [...prevMessages, payload.body]);
         console.log(messages);
-        setMessages([...payloadData]);
     }
 
 useEffect(() => {
@@ -88,6 +87,11 @@ useEffect(() => {
         
     setStompClient(client);
     
+    return () => {
+      if (client) {
+        client.deactivate();
+      }
+    };
     
     },
 []);

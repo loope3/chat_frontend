@@ -1,14 +1,13 @@
+.message {
+  padding: 8px;
+  margin-bottom: 10px; /* Spacing between messages */
+  background-color: #000000;
+  border-radius: 5px;
+  word-wrap: break-word; /* Ensures long messages wrap to the next line */
+  max-width: 80%; /* Adjusts how wide the messages can be */
+}
+
 .chat-history {
-    flex: 2; /* Takes up more space compared to the user sections */
-    border-left: 2px solid black;
-    border-right: 2px solid black;
-    padding: 10px;
-    overflow-y: auto; /* Allows scrolling if the chat history is long */
-  }
-  
-  .message {
-    margin-bottom: 10px;
-    padding: 5px;
-    background-color: #f1f1f1; /* Light gray background for messages */
-    border-radius: 5px;
-  }
+  max-height: 1000px; /* Example height */
+  overflow-y: auto; /* Adds scroll when messages exceed height */
+}

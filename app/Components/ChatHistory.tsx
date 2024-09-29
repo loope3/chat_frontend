@@ -1,15 +1,18 @@
-"use client";
 import React from 'react';
 import './ChatHistory.css';
 
 interface ChatHistoryProps {
-  messages: string; // Accepts a single string message
+  messages: string[]; // Accepts an array of strings for multiple messages
 }
 
 const ChatHistory: React.FC<ChatHistoryProps> = ({ messages }) => {
   return (
     <div className="chat-history">
-      {messages && <div className="message">{messages}</div>} {/* Display the message if it exists */}
+      {messages.map((message, index) => (
+        <div key={index} className="message">
+          Anonymous: {message}
+        </div>
+      ))}
     </div>
   );
 };
