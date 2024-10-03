@@ -10,6 +10,14 @@
   }
 }
 
+.chat-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #36393f;
+  height: 100vh;
+}
+
 /* User panels on the sides */
 .user-left,
 .user-right {
@@ -28,14 +36,28 @@
   }
 }
 
-/* Chat container in the center */
-.chat-container {
-  flex: 3;
+.current-users {
+  width: 250px; 
+  padding: 20px;
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
+  background-color: #23272a; 
+  border-left: 1px solid #40444b; 
+}
+
+/* come back to this, make users list look nicer */
+.list-active-users {
+  justify-content: space-between;
+}
+
+/* Chat container in the center */
+.message-history-container {
+  flex: 1;
+  display: flex;
   flex-direction: column;
   background-color: #36393f; /* Chat area background */
-  height: 100vh; /* Fill entire height */
+  border-bottom: 1px solid #40444b;
+  height: 85vh;
 }
 
 /* Chat history styling */
@@ -60,14 +82,16 @@
   padding: 10px;
   font-size: 16px;
   border: 2px solid black; /* Black border for the input field */
-  border-radius: 5px;
-  width: 95%;
+  border-radius: 10px;
   background-color: #2f3136; /* Input field background */
   color: #dcddde; /* Light text color */
 }
 
 /* Styling for the send button */
-.send-button {
+.message-send-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-left: 10px;
   padding: 10px 20px;
   background-color: #5865f2; 
@@ -79,8 +103,14 @@
   transition: background-color 0.3s ease;
 }
 
-.send-button:hover {
+.message-send-button:hover {
   background-color: #4752c4; /* Darker blue on hover */
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 10px 0;
 }
 
 /* Responsive font size adjustments */
@@ -91,6 +121,6 @@
 
   .send-button {
     padding: 8px 16px;
-    font-size: 14px;
+    font-size: 12px;
   }
 }

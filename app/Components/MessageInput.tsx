@@ -32,7 +32,7 @@ export default function MessageInput({ client, user }: MessageInputProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="message-input-form">
+    <form onSubmit={handleSubmit} className="message-input-container">
       <input
         type="text"
         placeholder="Type your message here..."

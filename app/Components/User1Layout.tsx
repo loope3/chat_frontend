@@ -21,7 +21,10 @@ export default function UserLayout() {
     username: "anonymous"
   };
 
-  const [messages, setMessages] = useState<string[]>([]);
+
+const [messages, setMessages] = useState<string[]>([]);
+const [activeUsers, setActiveUsers] = useState<{ username: string }[]>([]);
+
 const [stompClient, setStompClient] = useState(null);
 
 
@@ -51,9 +54,17 @@ useEffect(() => {
 	   onConnect: () => {
 	   
 	       console.log("Connection succesful!");
+         
+        // current temp list of users ot display
+        setActiveUsers([
+          { username: "User1" },
+          { username: "User2" },
+          { username: "User3" }
+        ]);
 	       
 	       client.subscribe(privatePreUrl + User.id + userUrl, (userList) => {
 		   //add function to load HTML users from here
+
 		   console.log(JSON.parse(userList.body));
 		   });
 		   
@@ -98,15 +109,24 @@ useEffect(() => {
 
   return (
     <div className="user-layout">
-      <div className="user-left">
-        <p>User 1</p>
-      </div>
       <div className="chat-container">
-        <MessageInput client={stompClient} user={User} />
-        <ChatHistory messages={messages} /> {/* Pass the state to ChatHistory */}
+        <div className='message-history-container'>
+          <ChatHistory messages={messages} /> {/* Pass the state to ChatHistory */}
+        </div> 
+        <div className='message-input-container'>
+          <MessageInput client={stompClient} user={User} />
+        </div>       
       </div>
-      <div className="user-right">
-        <p>User 2</p>
+      <div className="current-users">
+        <div className='user-name-and-activity'>
+          <p>You!</p>
+        </div>
+        <hr className="divider" />
+        <div className='list-active-users'>
+          {activeUsers.map((user, index) => (
+            <p key={index}>{user.username || `User ${index + 1}`}</p>
+          ))}
+        </div>
       </div>
     </div>
   );
